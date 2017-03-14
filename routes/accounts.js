@@ -413,10 +413,10 @@ router.delete ('/acc/v1/slbook/:id' , function(req, resp, next){
  }else {
    deleteData(req, resp, next,"DELETE FROM accslbooks WHERE ID = ? ",id ) ;
  }
-} 
+}
 ) ;
 
-/* ----------------------------------------------- SLBOOKS ----------------------------------*/
+/* ----------------------------------------------- SL ----------------------------------*/
 router.get('/acc/v1/sl', function(req, res, next) {
     consoleLog('Select from Rest') ;
     getAll(req,res,next,'SELECT * FROM accsl order by name')
@@ -458,9 +458,124 @@ router.delete ('/acc/v1/sl/:id' , function(req, resp, next){
  if (id == null|| id =="" || id==undefined) {
      consoleLog("Id not found : ") ;
  }else {
-   deleteData(req, resp, next,"DELETE FROM accgl WHERE ID = ? ",id ) ;
+   deleteData(req, resp, next,"DELETE FROM accsl WHERE ID = ? ",id ) ;
  }
-} 
+}
 ) ;
 
 
+
+/* -----------------------------------------------Doc ----------------------------------*/
+router.get('/acc/v1/doc', function(req, res, next) {
+    consoleLog('Select from Rest') ;
+    getAll(req,res,next,'SELECT * FROM accdoc order by docdate ')
+});
+
+router.get('/acc/v1/doc/:id', function(req, res, next) {
+    consoleLog('Select one from Rest') ;
+    var id = req.params.id ;
+    if (id == null|| id =="" || id==undefined) {
+        consoleLog("Id not found : ") ;
+    }else {
+       getAll(req,res,next,'SELECT * FROM accdoc where id='+id);
+    }
+});
+
+
+router.post('/acc/v1/doc', function(req,resp, next) {
+  consoleLog('Insert from Rest') ;
+  var reqObj = req.body ;
+  delete reqObj.id ;
+  consoleLog(reqObj) ;
+  insertData(req,resp, next,"INSERT INTO accdoc SET ? ",reqObj);
+
+}
+);
+
+router.put('/acc/v1/doc' , function(req, resp, next){
+ consoleLog('Update from Rest') ;
+ var input = req.body ;
+ consoleLog(input) ;
+ var id = input.id ;
+ consoleLog('update id '+ id) ;
+
+ if (id == null || id == undefined) {
+     consoleLog("Id not found : ") ;
+     console.error("Sql update Error: ",'Id not found' ) ;
+     return next() ;
+
+ }
+ delete input.id ;
+ updateData (req, resp, next, "UPDATE accdoc SET ? WHERE ID = ? ", input, id);
+
+  }
+) ;
+
+router.delete ('/acc/v1/doc/:id' , function(req, resp, next){
+ consoleLog('Delete from Rest') ;
+ var id = req.params.id ;
+ if (id == null|| id =="" || id==undefined) {
+     consoleLog("Id not found : ") ;
+ }else {
+   deleteData(req, resp, next,"DELETE FROM accdoc WHERE ID = ? ",id ) ;
+ }
+}
+) ;
+
+
+/* -----------------------------------------------Doc Detail ----------------------------------*/
+router.get('/acc/v1/docdet', function(req, res, next) {
+    consoleLog('Select from Rest') ;
+    getAll(req,res,next,'SELECT * FROM accdocdet order by docid');
+});
+
+router.get('/acc/v1/docdet/:id', function(req, res, next) {
+    consoleLog('Select one from Rest') ;
+    var id = req.params.id ;
+    if (id == null|| id =="" || id==undefined) {
+        consoleLog("Id not found : ") ;
+    }else {
+       getAll(req,res,next,'SELECT * FROM accdocdet where docid='+id);
+    }
+});
+
+
+router.post('/acc/v1/docdet', function(req,resp, next) {
+  consoleLog('Insert from Rest') ;
+  var reqObj = req.body ;
+  delete reqObj.id ;
+  consoleLog(reqObj) ;
+  insertData(req,resp, next,"INSERT INTO accdocdet SET ? ",reqObj);
+
+}
+);
+
+router.put('/acc/v1/docdet' , function(req, resp, next){
+ consoleLog('Update from Rest') ;
+ var input = req.body ;
+ consoleLog(input) ;
+ var id = input.id ;
+ consoleLog('update id '+ id) ;
+
+ if (id == null || id == undefined) {
+     consoleLog("Id not found : ") ;
+     console.error("Sql update Error: ",'Id not found' ) ;
+     return next() ;
+
+ }
+ delete input.id ;
+ updateData (req, resp, next, "UPDATE accdocdet SET ? WHERE ID = ? ", input, id);
+
+  }
+) ;
+
+router.delete ('/acc/v1/docdet/:id' , function(req, resp, next){
+ consoleLog('Delete from Rest') ;
+ var id = req.params.id ;
+ if (id == null|| id =="" || id==undefined) {
+     consoleLog("Id not found : ") ;
+ }else {
+   deleteData(req, resp, next,"DELETE FROM accdocdet WHERE ID = ? ",id ) ;
+ }
+}
+) ;
